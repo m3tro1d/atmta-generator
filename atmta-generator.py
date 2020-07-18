@@ -36,16 +36,32 @@ filename = args.FILE
 # Process the specified file
 in_file = ffmpeg.input(filename)
 overlay_file = ffmpeg.input(filename)
-# Prepare the overlay
-overlay = (
-	ffmpeg
-	.hflip(overlay_file)
-	.filter('crop', 'iw/2', 'ih', '0', '0')
-)
-# Join the files
-(
-	ffmpeg
-	.overlay(in_file, overlay)
-	.output(output_name(filename))
-	.run()
-)
+
+if side == "right":
+	# Prepare the overlay
+	overlay = (
+		ffmpeg
+		.hflip(overlay_file)
+		.filter('crop', 'iw/2', 'ih', '0', '0')
+	)
+	# Join the files
+	(
+		ffmpeg
+		.overlay(in_file, overlay)
+		.output(output_name(filename))
+		.run()
+	)
+elif side == "left":
+	# Prepare the overlay
+	overlay = (
+		ffmpeg
+		.hflip(overlay_file)
+		.filter('crop', 'iw/2', 'ih', 'iw/2', '0')
+	)
+	# Join the files
+	(
+		ffmpeg
+		.overlay(in_file, overlay, x="main_w/2")
+		.output(output_name(filename))
+		.run()
+	)
