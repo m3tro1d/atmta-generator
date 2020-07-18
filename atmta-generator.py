@@ -37,15 +37,15 @@ filename = args.FILE
 in_file = ffmpeg.input(filename)
 overlay_file = ffmpeg.input(filename)
 # Prepare the overlay
-(
-	overlay_file
-	.hflip()
+overlay = (
+	ffmpeg
+	.hflip(overlay_file)
 	.filter('crop', 'iw/2', 'ih', '0', '0')
 )
 # Join the files
 (
-	in_file
-	.overlay(overlay_file)
-	.output("{}-{}flipped.{}", get_name(filename), side, get_ext(filename)).
-	run()
+	ffmpeg
+	.overlay(in_file, overlay)
+	.output(output_name(filename))
+	.run()
 )
