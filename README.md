@@ -22,12 +22,12 @@ By the default, the output files will be placed in the same directory as the ori
 ## Example
 Original:
 
-![Original image](example/original.jpg?raw=true "Original image")
+![Original image](example/original.png?raw=true "Original image")
 
 Right-flipped:
 
-![Right-flipped image](example/original-rightflipped.jpg?raw=true "Right-flipped image")
+![Right-flipped image](example/original-rightflipped.png?raw=true "Right-flipped image")
 
 Left-flipped:
 
-![Left-flipped image](example/original-leftflipped.jpg?raw=true "Left-flipped image")
+![Left-flipped image](example/original-leftflipped.png?raw=true "Left-flipped image")
