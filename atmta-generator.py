@@ -20,52 +20,59 @@ def output_name(filename):
                                     get_ext(filename))
 
 
-# Parse the input parameters
-parser = argparse.ArgumentParser(
-    description="""This script is (pretty much useless) generates ATMTA
-    pictures, flipped by the specified side.""")
+def main():
+    """Entry point of the script"""
+    # Parse the input parameters
+    parser = argparse.ArgumentParser(
+        description="""This script is (pretty much useless) generates ATMTA
+        pictures, flipped by the specified side.""")
 
-parser.add_argument("SIDE",
-                    choices=["right", "left"],
-                    help="image will be flipped with this side")
+    parser.add_argument("SIDE",
+                        choices=["right", "left"],
+                        help="image will be flipped with this side")
 
-parser.add_argument("FILE",
-                    help="name of the picture file")
+    parser.add_argument("FILE",
+                        help="name of the picture file")
 
-args = parser.parse_args()
-side = args.SIDE
-filename = args.FILE
+    args = parser.parse_args()
+    side = args.SIDE
+    filename = args.FILE
 
 
-# Process the specified file
-in_file = ffmpeg.input(filename)
-overlay_file = ffmpeg.input(filename)
+    # Process the specified file
+    in_file = ffmpeg.input(filename)
+    overlay_file = ffmpeg.input(filename)
 
-if side == "right":
-    # Prepare the overlay
-    overlay = (
-        ffmpeg
-        .hflip(overlay_file)
-        .filter('crop', 'iw/2', 'ih', '0', '0')
-    )
-    # Join the files
-    (
-        ffmpeg
-        .overlay(in_file, overlay)
-        .output(output_name(filename))
-        .run()
-    )
-elif side == "left":
-    # Prepare the overlay
-    overlay = (
-        ffmpeg
-        .hflip(overlay_file)
-        .filter('crop', 'iw/2', 'ih', 'iw/2', '0')
-    )
-    # Join the files
-    (
-        ffmpeg
-        .overlay(in_file, overlay, x="main_w/2")
-        .output(output_name(filename))
-        .run()
-    )
+    if side == "right":
+        # Prepare the overlay
+        overlay = (
+            ffmpeg
+            .hflip(overlay_file)
+            .filter('crop', 'iw/2', 'ih', '0', '0')
+        )
+        # Join the files
+        (
+            ffmpeg
+            .overlay(in_file, overlay)
+            .output(output_name(filename))
+            .run()
+        )
+    elif side == "left":
+        # Prepare the overlay
+        overlay = (
+            ffmpeg
+            .hflip(overlay_file)
+            .filter('crop', 'iw/2', 'ih', 'iw/2', '0')
+        )
+        # Join the files
+        (
+            ffmpeg
+            .overlay(in_file, overlay, x="main_w/2")
+            .output(output_name(filename))
+            .run()
+        )
+
+
+# Entry point
+if __name__ == "__main__":
+    main()
