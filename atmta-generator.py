@@ -13,7 +13,7 @@ def get_ext(filename):
     return filename.split(".")[-1]
 
 
-def output_name(filename):
+def output_name(filename, side):
     """Returns a nicely formatted output filename"""
     return "{}-{}flipped.{}".format(get_name(filename),
                                     side,
@@ -49,7 +49,7 @@ def process_file(filename, side):
         (
             ffmpeg
             .overlay(in_file, overlay)
-            .output(output_name(filename))
+            .output(output_name(filename, side))
             .run()
         )
     elif side == "left":
@@ -63,7 +63,7 @@ def process_file(filename, side):
         (
             ffmpeg
             .overlay(in_file, overlay, x="main_w/2")
-            .output(output_name(filename))
+            .output(output_name(filename, side))
             .run()
         )
 
