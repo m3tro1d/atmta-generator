@@ -20,26 +20,21 @@ def output_name(filename):
                                     get_ext(filename))
 
 
-def main():
-    """Entry point of the script"""
-    # Parse the input parameters
+def parse_arguments():
+    """Processes input arguments"""
     parser = argparse.ArgumentParser(
         description="""This script is (pretty much useless) generates ATMTA
         pictures, flipped by the specified side.""")
-
     parser.add_argument("SIDE",
                         choices=["right", "left"],
                         help="image will be flipped with this side")
-
     parser.add_argument("FILE",
                         help="name of the picture file")
-
-    args = parser.parse_args()
-    side = args.SIDE
-    filename = args.FILE
+    return parser.parse_args()
 
 
-    # Process the specified file
+def process_file(filename, side):
+    """Processes the file using the specified side"""
     in_file = ffmpeg.input(filename)
     overlay_file = ffmpeg.input(filename)
 
@@ -71,6 +66,17 @@ def main():
             .output(output_name(filename))
             .run()
         )
+
+
+
+def main():
+    """Entry point of the script"""
+    # Parse the input parameters
+    args = parse_arguments()
+    side = args.SIDE
+    filename = args.FILE
+    # Process the file
+    process_file(filename, side)
 
 
 # Entry point
