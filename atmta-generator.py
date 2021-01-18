@@ -53,13 +53,25 @@ def output_name(filename, side):
     return f"{get_name(filename)}-{side}flipped.{get_ext(filename)}"
 
 
+def valid_file(string):
+    """Converts the string to a valid file path"""
+    path = os.path.abspath(string)
+    if not os.path.exists(path):
+        error = f"File does not exist: {path}"
+        raise argparse.ArgumentTypeError(error)
+    if not os.path.isfile(path):
+        error = f"Not a file: {path}"
+        raise argparse.ArgumentTypeError(error)
+    return path
+
+
 def parse_arguments():
     """Processes input arguments"""
     parser = CustomArgumentParser(usage="%(prog)s SIDE FILE")
 
     parser.add_argument("side", choices=["right", "left"])
 
-    parser.add_argument("file")
+    parser.add_argument("file", type=valid_file)
 
     args = parser.parse_args()
     return args
