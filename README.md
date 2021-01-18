@@ -7,14 +7,16 @@ This little script generates ATMTA-like pictures via ffmpeg.
 
 ## Usage
 ```
-atmta-generator.py [-h] {right,left} FILE
+Usage: atmta-generator.py SIDE FILE
 
-positional arguments:
-  {right,left}  image will be flipped with this side
-  FILE          file name of the picture
+SIDE:
+  Which side of the image is used for mirroring (right|left)
 
-optional arguments:
-  -h, --help    show this help message and exit
+FILE:
+  Image to flip
+
+Options:
+  -h,  --help     show help
 ```
 
 By the default, the output files will be placed in the same directory as the original file.
