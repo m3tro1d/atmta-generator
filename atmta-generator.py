@@ -76,13 +76,16 @@ def parse_arguments():
     args = parser.parse_args()
     return args
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Main script
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def process_file(filename, side):
-    """Processes the file using the specified side"""
-    in_file = ffmpeg.input(filename)
-    overlay_file = ffmpeg.input(filename)
+def main():
+    """Main script"""
+    in_file = ffmpeg.input(args.file)
+    overlay_file = ffmpeg.input(args.file)
 
-    if side == "right":
+    if args.side == "right":
         # Prepare the overlay
         overlay = (
             ffmpeg
@@ -93,10 +96,10 @@ def process_file(filename, side):
         (
             ffmpeg
             .overlay(in_file, overlay)
-            .output(output_name(filename, side))
+            .output(output_name(args.file, args.side))
             .run()
         )
-    elif side == "left":
+    elif args.side == "left":
         # Prepare the overlay
         overlay = (
             ffmpeg
@@ -107,17 +110,9 @@ def process_file(filename, side):
         (
             ffmpeg
             .overlay(in_file, overlay, x="main_w/2")
-            .output(output_name(filename, side))
+            .output(output_name(args.file, args.side))
             .run()
         )
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Main script
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-def main():
-    """Main script"""
-    process_file(args.file, args.side)
 
 
 # Entry point
