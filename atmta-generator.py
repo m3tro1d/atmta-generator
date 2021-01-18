@@ -1,3 +1,4 @@
+from textwrap import dedent
 import argparse
 import os
 
@@ -6,6 +7,32 @@ try:
 except ImportError:
     print("'ffmpeg' module not found")
     sys.exit(1)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Classes
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class CustomArgumentParser(argparse.ArgumentParser):
+    """Override ArgumentParser's help message"""
+    def format_help(self):
+        help_text = dedent(f"""\
+        ATMTA generator. Nuff said.
+
+        Usage: {self.prog} SIDE FILE
+
+        SIDE:
+          Which side of the image is used for mirroring (right|left)
+
+        FILE:
+          Image to flip
+
+        Options:
+          -h,  --help     show help
+
+        For more information visit:
+        https://github.com/m3tro1d/atmta-generator
+        """)
+        return help_text
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Functions
@@ -30,15 +57,14 @@ def output_name(filename, side):
 
 def parse_arguments():
     """Processes input arguments"""
-    parser = argparse.ArgumentParser(
-        description="""This script is (pretty much useless) generates ATMTA
-        pictures, flipped by the specified side.""")
-    parser.add_argument("SIDE",
-                        choices=["right", "left"],
-                        help="image will be flipped with this side")
-    parser.add_argument("FILE",
-                        help="name of the picture file")
-    return parser.parse_args()
+    parser = CustomArgumentParser(usage="%(prog)s SIDE FILE")
+
+    parser.add_argument("side", choices=["right", "left"])
+
+    parser.add_argument("file")
+
+    args = parser.parse_args()
+    return args
 
 
 def process_file(filename, side):
@@ -83,8 +109,8 @@ def main():
     """Main script"""
     # Parse the input parameters
     args = parse_arguments()
-    side = args.SIDE
-    filename = args.FILE
+    side = args.side
+    filename = args.file
     # Process the file
     process_file(filename, side)
 
