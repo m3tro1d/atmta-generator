@@ -1,6 +1,11 @@
 import argparse
-import ffmpeg
 import os
+
+try:
+    import ffmpeg
+except ImportError:
+    print("'ffmpeg' module not found")
+    sys.exit(1)
 
 
 def get_name(filename):
