@@ -128,3 +128,4 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         print("\nUser interrupt", file=sys.stderr)
+        sys.exit(1)
