@@ -117,7 +117,7 @@ def process_file(filename, side):
 
 def main():
     """Main script"""
-    process_file(args.filename, args.side)
+    process_file(args.file, args.side)
 
 
 # Entry point
