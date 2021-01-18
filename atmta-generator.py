@@ -50,9 +50,7 @@ def get_ext(filename):
 
 def output_name(filename, side):
     """Returns a nicely formatted output filename"""
-    return "{}-{}flipped.{}".format(get_name(filename),
-                                    side,
-                                    get_ext(filename))
+    return f"{get_name(filename)}-{side}flipped.{get_ext(filename)}"
 
 
 def parse_arguments():
