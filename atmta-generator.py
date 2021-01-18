@@ -7,6 +7,9 @@ except ImportError:
     print("'ffmpeg' module not found")
     sys.exit(1)
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Functions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def get_name(filename):
     """Returns file's name w/o extension"""
@@ -72,10 +75,12 @@ def process_file(filename, side):
             .run()
         )
 
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Main script
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def main():
-    """Entry point of the script"""
+    """Main script"""
     # Parse the input parameters
     args = parse_arguments()
     side = args.SIDE
