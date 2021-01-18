@@ -107,14 +107,11 @@ def process_file(filename, side):
 
 def main():
     """Main script"""
-    # Parse the input parameters
-    args = parse_arguments()
-    side = args.side
-    filename = args.file
-    # Process the file
-    process_file(filename, side)
+    process_file(args.filename, args.side)
 
 
 # Entry point
 if __name__ == "__main__":
+    args = parse_arguments()
+
     main()
